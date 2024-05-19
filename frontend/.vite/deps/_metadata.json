@@ -1,0 +1,40 @@
+{
+  "hash": "e779f7ae",
+  "configHash": "9f632f9c",
+  "lockfileHash": "e3b0c442",
+  "browserHash": "d7da8854",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "0468aea1",
+      "needsInterop": true
+    },
+    "react-alice-carousel": {
+      "src": "../../node_modules/react-alice-carousel/lib/react-alice-carousel.js",
+      "file": "react-alice-carousel.js",
+      "fileHash": "ef969674",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "ceb54271",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "27e08510",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-OYP6L5KJ": {
+      "file": "chunk-OYP6L5KJ.js"
+    },
+    "chunk-ATZAHYIB": {
+      "file": "chunk-ATZAHYIB.js"
+    }
+  }
+}
