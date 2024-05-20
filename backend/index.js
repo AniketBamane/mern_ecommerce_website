@@ -4,6 +4,7 @@ const productRouter = require("./Router/productRouter")
 const userRouter = require("./Router/userRouter")
 const wishlistRouter =  require("./Router/wishlistRouter")
 const reviewRouter = require("./Router/reviewRouter")
+const orderRouter = require("./Router/orderRouter")
 const connection = require("./utils/db")
 const errorMiddleware = require("./middleware/errorMiddleware")
 const app = express();
@@ -13,6 +14,7 @@ app.use("/api/product",productRouter)
 app.use("/api/cart",userRouter)
 app.use("/api/wishlist",wishlistRouter)
 app.use("/api/review",reviewRouter)
+app.use("/api/order",orderRouter)
 
 app.use(errorMiddleware)
 connection().then(()=>{

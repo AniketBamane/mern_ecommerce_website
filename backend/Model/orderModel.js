@@ -18,7 +18,13 @@ const orderModel = mongoose.Schema({
   amount:{
     type: Number,
     required: true
-  }
+  },
+  products:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product'
+    }
+  ]
 })
 
 module.exports = mongoose.model('Order',orderModel)

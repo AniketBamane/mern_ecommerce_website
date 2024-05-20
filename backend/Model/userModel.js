@@ -27,12 +27,6 @@ const userModel = mongoose.Schema({
     type: String,
     required: true
   },
-  orders:[
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Order'
-    }
-  ],
   createdAt: {
     type: Date,
     default: Date.now()
@@ -41,12 +35,6 @@ const userModel = mongoose.Schema({
     type: String,
     required: true
   },
-  reviews:[
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Review'
-    }
-  ],
   wishlist:[
     {
       type: mongoose.Schema.Types.ObjectId,

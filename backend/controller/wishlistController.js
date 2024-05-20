@@ -17,6 +17,7 @@ const addProduct = async(req, res, next) => {
   }
 }
 
+
 const deleteProduct = async(req, res, next) => {
   try{
     const productId = req.params.id

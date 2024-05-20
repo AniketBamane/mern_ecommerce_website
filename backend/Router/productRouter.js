@@ -6,4 +6,10 @@ router.route("/allProducts").get(controller.getAllProducts)
 
 router.route("/oneProduct/:id").get(controller.getAProduct)
 
+router.route("/men").get(controller.getMenProducts)
+
+router.route("/women").get(controller.getWomenProducts)
+
+router.route("/kids").get(controller.getKidsProducts)
+
 module.exports = router
