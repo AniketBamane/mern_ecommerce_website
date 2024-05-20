@@ -13,7 +13,7 @@ const signin = async (req, res) => {
          if(err) return res.status(404).json({message:"error while hashing password !"});
          const user = await userModel.create({email,password:hash,name,gender,phone})
          if(user){
-          var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
+          var token = jwt.sign({email}, 'shhhhh');
           return  res.status(201).json({message: "user created successfully",token,user})
          }else{
           return   res.status(500).json({message: "user not created , Try again !"})
