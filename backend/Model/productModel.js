@@ -16,6 +16,32 @@ const productModel = mongoose.Schema({
   quantity:{
     type: Number,
     required: true
+  },
+  reviews:[
+    {
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'Review'
+    }
+  ],
+  description:{
+    type: String,
+    required: true
+  },
+  type:{
+    type: String,
+    required: true
+  },
+  gender:{
+    type: String,
+    required: true
+  },
+  vendor:{
+    type: String,
+    required: true
+  },
+  popular:{
+    type: Boolean,
+    default: false
   }
 })
 
