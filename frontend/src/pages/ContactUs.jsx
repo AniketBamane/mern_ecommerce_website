@@ -1,8 +1,11 @@
 // src/pages/ContactUs.jsx
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
+import {toast} from "react-toastify"
+import {useSelector } from 'react-redux';
 
 const ContactUs = () => {
+  const token = useSelector(state=>state.auth.token)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,10 +20,37 @@ const ContactUs = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    console.log('Form Data Submitted: ', formData);
-    // Here you can handle the form submission, e.g., sending the data to a server
+    console.log("token is "+token)
+    try{
+      const response = await fetch("http://localhost:3000/api/contact/requestContact",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          "Authorization":"Bearer "+token
+        },
+        body:JSON.stringify({
+          name:formData.name,
+          email:formData.email,
+          message:formData.message
+        })
+      })
+      const data = await response.json()
+      if(!response.ok){
+        toast.error(data.message)
+      }else{
+      toast.success("contact details sent successfully !")     
+      setFormData({
+        name: '',
+        email: '',
+        message: ''
+      });
+      }
+
+    }catch(err){
+      console.log(err.message)
+    }
   };
 
   return (

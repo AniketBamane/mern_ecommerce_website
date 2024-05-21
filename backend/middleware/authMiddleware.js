@@ -22,7 +22,7 @@ const authMiddleware = async(req, res, next) => {
     }else{
       res.status(400).json({message:"unauthorized user !"})
     }
-
+    
   }catch(err){
     res.status(500).json({message: err.message})
   }
