@@ -16,8 +16,8 @@ import ContactUs from './pages/ContactUs';
 import OrderPage from './pages/OrderPage';
 import Logout from './pages/Logout';
 import {useDispatch, useSelector} from "react-redux"
-import { fetchKidsProducts, fetchMenProducts, fetchWomenProducts } from './store/slices/productSlice'
-import { fetchWishlist } from './store/slices/wishlistSlice';
+import { fetchKidsProducts, fetchMenProducts, fetchPopularProducts, fetchWomenProducts } from './store/slices/productSlice'
+import ProductPage from './pages/ProductPage';
 
 const App = () => {
  const dispatch = useDispatch()
@@ -25,6 +25,7 @@ const App = () => {
   dispatch(fetchMenProducts())
   dispatch(fetchWomenProducts())
   dispatch(fetchKidsProducts())
+  dispatch(fetchPopularProducts())
  },[dispatch])
   return (
     <div className='pt-5 bg-purple-100'>
@@ -45,6 +46,7 @@ const App = () => {
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/login' element={<Login />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/product/:id' element={<ProductPage />} />
       </Routes>
       <Footer />
       </BrowserRouter>

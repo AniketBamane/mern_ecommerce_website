@@ -31,9 +31,34 @@ export const fetchKidsProducts = createAsyncThunk("fetchKidsProducts",async()=>{
   const data = await res.json()
   return data.products
 })
+
+export const fetchProduct = createAsyncThunk("fetchProduct",async(productId)=>{
+  const res = await fetch(`http://localhost:3000/api/product/oneProduct/${productId}`,{
+    method:"GET",
+    headers:{
+      "Content-Type":"application/json",
+    }
+  })
+  const data = await res.json()
+  return data.product
+})
+
+export const fetchPopularProducts = createAsyncThunk("fetchPopularProducts",async()=>{
+  const res = await fetch("http://localhost:3000/api/product/getPopularProducts",{
+    method:"GET",
+    headers:{
+      "Content-Type":"application/json"
+    }
+  })
+  const data = await res.json()
+  return data.products
+})
+
 const productSlice = createSlice({
   name: "product",
   initialState: {
+    product:{},
+    popularProducts:[],
     womenProducts: [],
     kidsProducts: [],
     menProducts: [],
@@ -80,6 +105,32 @@ const productSlice = createSlice({
       state.isLoading = false
     })
     builder.addCase(fetchKidsProducts.rejected,(state,action)=>{
+      state.isLoading = false
+      state.isError.status = true
+      state.isError.message = action.payload.message
+    })
+    //product
+    builder.addCase(fetchProduct.pending,(state,action)=>{
+      state.isLoading = true
+    })
+    builder.addCase(fetchProduct.fulfilled,(state,action)=>{
+      state.product = action.payload
+      state.isLoading = false
+    })
+    builder.addCase(fetchProduct.rejected,(state,action)=>{
+      state.isLoading = false
+      state.isError.status = true
+      state.isError.message = action.payload.message
+    })
+    //popularproducts
+    builder.addCase(fetchPopularProducts.pending,(state,action)=>{
+      state.isLoading = true
+    })
+    builder.addCase(fetchPopularProducts.fulfilled,(state,action)=>{
+      state.popularProducts = action.payload
+      state.isLoading = false
+    })
+    builder.addCase(fetchPopularProducts.rejected,(state,action)=>{
       state.isLoading = false
       state.isError.status = true
       state.isError.message = action.payload.message

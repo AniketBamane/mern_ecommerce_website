@@ -1,9 +1,15 @@
 // src/components/Card.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Card = ({ image, name, rating }) => {
+const Card = ({ image, name, rating ,productId }) => {
+  const navigate = useNavigate()
+  console.log(productId)
   return (
-    <div className="max-w-xs rounded overflow-hidden shadow-lg p-4 bg-white">
+    <div className="max-w-xs rounded overflow-hidden shadow-lg p-4 bg-white" onClick={(e)=>{
+      navigate(`/product/${productId}`)
+      console.log("clicked !")
+     }} >
       <img className="w-full h-48 object-cover" src={image} alt={name} />
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{name}</div>

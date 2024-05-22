@@ -12,4 +12,6 @@ router.route("/women").get(controller.getWomenProducts)
 
 router.route("/kids").get(controller.getKidsProducts)
 
+router.route("/getPopularProducts").get(controller.getPopularProducts)
+
 module.exports = router
