@@ -33,7 +33,7 @@ const login = async (req, res) => {
     if(user){
       bcrypt.compare(password, user.password, async function(err, result) {
         if(result){
-          var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
+          var token = jwt.sign({email}, 'shhhhh');
           const createdUser =  await userModel.findOne({_id:user._id},{password:0})
           res.status(201).json({message: "user logged in successfully",token,createdUser})
         }else{

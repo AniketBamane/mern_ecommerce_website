@@ -12,16 +12,18 @@ const NavBar = () => {
       <div className='flex w-2/3 justify-evenly'>
         <NavLink to={"/"} className='px-5 py-0 bg-purple-300 rounded-md cursor-pointer text-sm grid place-items-center'>Home</NavLink>
         <NavLink to={"/products"} className='px-5 py-0 bg-purple-300 rounded-md cursor-pointer text-sm grid place-items-center'>Products</NavLink>
-        <NavLink to={"/wishlist"} className='px-5 py-0 bg-purple-300 rounded-md cursor-pointer text-sm grid place-items-center'>Wishlist</NavLink>
-        <NavLink to={"/order"} className='px-5 py-0 bg-purple-300 rounded-md cursor-pointer text-sm grid place-items-center'>My Order</NavLink>
-        <NavLink to={"/contact-us"} className='px-5 py-0 bg-purple-300 rounded-md cursor-pointer text-sm grid place-items-center'>Contact us</NavLink>
        {!state.token ? (
-        <>
+         <>
         <NavLink to={"/sign-in"} className='px-5 py-0 bg-purple-300 rounded-md cursor-pointer text-sm grid place-items-center'>Sign In</NavLink>
          <NavLink to={"/login"} className='px-5 py-0 bg-purple-300 rounded-md cursor-pointer text-sm grid place-items-center'>Login</NavLink>
         </>
        ):
+       <>
+       <NavLink to={"/order"} className='px-5 py-0 bg-purple-300 rounded-md cursor-pointer text-sm grid place-items-center'>My Order</NavLink>
+       <NavLink to={"/contact-us"} className='px-5 py-0 bg-purple-300 rounded-md cursor-pointer text-sm grid place-items-center'>Contact us</NavLink>
+       <NavLink to={"/wishlist"} className='px-5 py-0 bg-purple-300 rounded-md cursor-pointer text-sm grid place-items-center'>Wishlist</NavLink>
        <NavLink to={"/logout"} className='px-5 py-0 bg-purple-300 rounded-md cursor-pointer text-sm grid place-items-center'>Log out</NavLink>
+       </>
        }
       </div>
     </nav>

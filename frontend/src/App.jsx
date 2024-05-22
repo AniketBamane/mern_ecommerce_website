@@ -1,5 +1,5 @@
 // src/App.jsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import Home from './pages/Home';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Men from './pages/Men';
@@ -15,8 +15,17 @@ import Products from './pages/Products';
 import ContactUs from './pages/ContactUs';
 import OrderPage from './pages/OrderPage';
 import Logout from './pages/Logout';
+import {useDispatch, useSelector} from "react-redux"
+import { fetchKidsProducts, fetchMenProducts, fetchWomenProducts } from './store/slices/productSlice'
+import { fetchWishlist } from './store/slices/wishlistSlice';
 
 const App = () => {
+ const dispatch = useDispatch()
+ useEffect(()=>{
+  dispatch(fetchMenProducts())
+  dispatch(fetchWomenProducts())
+  dispatch(fetchKidsProducts())
+ },[dispatch])
   return (
     <div className='pt-5 bg-purple-100'>
       <BrowserRouter>
@@ -28,8 +37,8 @@ const App = () => {
         <Route path='/order' element={<OrderPage />} />
         <Route path='/products/' element={<Products />}>
         <Route index element={ <Navigate to="men" />} />
-        <Route path='men' element={<Men />} />
-        <Route path='women' element={<Women />} />
+        <Route path='men' element={<Men />}  />
+        <Route path='women' element={<Women />}   />
         <Route path='kids' element={<Kids />} />
         </Route> 
         <Route path='/logout' element={<Logout />} />

@@ -6,4 +6,6 @@ router.route("/addProducts").get(authMiddleware,controller.addProduct)
 
 router.route("/deleteProduct/:id").delete(authMiddleware,controller.deleteProduct)
 
+router.route("/getWishlist").get(authMiddleware,controller.getWishlist)
+
 module.exports = router

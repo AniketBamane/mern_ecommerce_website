@@ -2,22 +2,22 @@ import React, { useEffect, useState } from 'react'
 import Card from '../components/Card';
 import Layout from '../components/Layout';
 import ProductSection from '../components/ProductSection';
+import { useSelector } from 'react-redux';
 
-function Women() {
-  const [products,setProducts] = useState([])
-  useEffect(() => {
-   fetch('http://localhost:3000/api/product/women',{
-     method:'GET',
-     headers:{
-       'Content-Type':'application/json'
-     }
-   })
-  .then(res => res.json())
-  .then(data => setProducts([...data.products]))
-  }, [])
+function Women() { 
+  const product = useSelector(state=>state.product)
+if(product.isLoading){
+  return <h1>Loading...</h1>
+}
+if(product.womenProducts.length == 0){
+  return <center>
+    <iframe src="https://lottie.host/embed/b935a03a-6ca8-4a02-9992-fccb4f6f5c31/zxjly60Suo.json"></iframe>
+  </center>
+ }else{
   return (
-    <ProductSection products={products} />
-  )
+    <ProductSection products={product.womenProducts} />
+      )
+ }
 }
 
 export default Women

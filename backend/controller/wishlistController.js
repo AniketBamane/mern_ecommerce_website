@@ -33,8 +33,23 @@ const deleteProduct = async(req, res, next) => {
   }
 }
 
+const getWishlist = async(req, res, next) => {
+  try{
+    const user = req.user
+    const createdUser = await userModel.findOne({_id:user._id}).populate("wishlist")
+    if(createdUser){
+      res.status(200).json({wishlist:createdUser.wishlist})
+    }else{
+      res.status(404).json({wishlist:[],message: "No items in  wishlist found"})
+    }
+  }catch(err){
+    res.status(500).json({message: err.message})
+  }
+}
+
 
 module.exports = {
   addProduct,
   deleteProduct,
+  getWishlist
 }
