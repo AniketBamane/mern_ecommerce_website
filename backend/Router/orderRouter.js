@@ -7,7 +7,7 @@ router.route("/allOrders").get(authMiddleware, controller.getAllOrders)
 
 router.route("/createOrder").get(authMiddleware, controller.createOrder)
 
-router.route("/deleteOrder/:id").get(authMiddleware, controller.deleteOrder)
+router.route("/deleteOrder/:id").delete(authMiddleware, controller.deleteOrder)
 
 
 module.exports=router

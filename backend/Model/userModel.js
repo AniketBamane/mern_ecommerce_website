@@ -41,12 +41,6 @@ const userModel = mongoose.Schema({
       ref: 'Product'
     }
   ],
-  cart:[
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product'
-    }
-  ]
 })
 
 module.exports = mongoose.model('User',userModel)

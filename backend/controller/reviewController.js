@@ -40,9 +40,25 @@ const deleteReview = async(req, res, next)=>{
   }
 }
 
+const getAllReviews = async(req, res, next)=>{
+  try{
+    const productId = req.params.id
+    const reviews = await reviewModel.find({product:productId})
+    if(reviews){
+      res.status(200).json({reviews})
+    }else{
+      res.status(404).json({reviews:[],message: "No reviews found"})
+    }
+  }catch(err){
+    res.status(500).json({message: err.message})
+  }
+}
+//TODO: user must have review field in it's model to acheive populate operation 
+
 
 module.exports = 
 {
   createReview,
   deleteReview,
+  getAllReviews,
 }

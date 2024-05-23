@@ -15,16 +15,13 @@ import Products from './pages/Products';
 import ContactUs from './pages/ContactUs';
 import OrderPage from './pages/OrderPage';
 import Logout from './pages/Logout';
-import {useDispatch, useSelector} from "react-redux"
-import { fetchKidsProducts, fetchMenProducts, fetchPopularProducts, fetchWomenProducts } from './store/slices/productSlice'
+import {useDispatch} from "react-redux"
+import {fetchPopularProducts } from './store/slices/productSlice'
 import ProductPage from './pages/ProductPage';
 
 const App = () => {
  const dispatch = useDispatch()
  useEffect(()=>{
-  dispatch(fetchMenProducts())
-  dispatch(fetchWomenProducts())
-  dispatch(fetchKidsProducts())
   dispatch(fetchPopularProducts())
  },[dispatch])
   return (

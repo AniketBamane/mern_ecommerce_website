@@ -5,15 +5,18 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProduct } from '../store/slices/productSlice';
 import LoadingBar from '../components/LoadingBar';
+import { fetchReviews } from '../store/slices/reviewSlice';
 
 const ProductPage = () => {
   const {id} = useParams()
   const dispatch = useDispatch()
   const productState = useSelector(state=>state.product)
+  const reviewState = useSelector(state=>state.review)
   const [quantity, setQuantity] = useState(1);
 
   useEffect(()=>{
   dispatch(fetchProduct(id))
+  dispatch(fetchReviews(id))
   },[dispatch])
   const product = {
     name: "Wool Sweater",
@@ -120,11 +123,17 @@ const ProductPage = () => {
         {/* Reviews Section */}
         <div className="mt-10">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Reviews</h2>
-          {reviews.map((review, index) => (
+          {reviewState.reviews.length === 0 && 
+          (
+            <center>
+              <h1>No Reviews Yet</h1>
+            </center>
+          )}
+          {reviewState.reviews.map((review, index) => (
             <div key={index} className="mb-6 p-4 bg-gray-100 rounded-lg shadow-md">
               <div className="flex justify-between items-center mb-2">
-                <h3 className="text-lg font-semibold">{review.user}</h3>
-                <span className="text-gray-600">{new Date(review.date).toLocaleDateString()}</span>
+                <h3 className="text-lg font-semibold">Unknown</h3>
+                <span className="text-gray-600">{new Date(review.createdAt).toLocaleDateString()}</span>
               </div>
               <div className="flex items-center mb-2">
                 <span className="text-yellow-500">{'★'.repeat(review.rating)}</span>

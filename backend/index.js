@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require("cors")
 const authRouter = require('./Router/authRouter');
 const productRouter = require("./Router/productRouter")
-const userRouter = require("./Router/userRouter")
 const wishlistRouter =  require("./Router/wishlistRouter")
 const reviewRouter = require("./Router/reviewRouter")
 const orderRouter = require("./Router/orderRouter")
@@ -19,7 +18,7 @@ app.use(cors(corsOptions));
 app.use(express.json())
 app.use('/api/auth',authRouter)
 app.use("/api/product",productRouter)
-app.use("/api/cart",userRouter)
+
 app.use("/api/wishlist",wishlistRouter)
 app.use("/api/review",reviewRouter)
 app.use("/api/order",orderRouter)

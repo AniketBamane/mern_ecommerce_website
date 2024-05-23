@@ -1,43 +1,47 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CartItem from '../components/CartItem';
-import { useState } from 'react';
 import Layout from '../components/Layout';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchOrders } from '../store/slices/orderSlice';
+import LoadingBar from '../components/LoadingBar';
+import { toast } from 'react-toastify';
 function Cart() {
-  const [cartItems, setCartItems] = useState([
-    { id: 1, name: 'Product 1', price: 29.99, quantity: 1 },
-    { id: 2, name: 'Product 2', price: 49.99, quantity: 2 },
-    // Add more items as needed
-  ]);
+  const token = useSelector(state=>state.auth.token)
+  const orderState = useSelector(state=>state.order)
+  const dispatch = useDispatch()  
+  useEffect(()=>{
+    dispatch(fetchOrders({token,status:'unplaced'}))
+  },[dispatch])
 
-  const handleRemove = (id) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-  };
+  console.log("orders are : "+orderState.orders)
 
-  const handleQuantityChange = (id, newQuantity) => {
-    setCartItems(cartItems.map(item =>
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    ));
-  };
 
-  const totalAmount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
+  const totalAmount = orderState.orders.reduce((total, item) => total + item.amount , 0);
+ if(orderState.isLoading){
+  return <center>
+    <LoadingBar />
+  </center>
+ } 
+ if(orderState.isError.status){
+  return <center>
+    <h1>{orderState.isError.message}</h1>
+  </center>
+ }
   return (
    <Layout>
      <div className="min-h-screen flex p-10 bg-gray-100">
       <div className="w-2/3 mr-8">
         <h2 className="text-3xl font-bold mb-6">Shopping Cart</h2>
-        {cartItems.length === 0 ? (
+        {orderState.orders.length === 0 ? (
           <div className='grid place-items-center'>
            <iframe src="https://lottie.host/embed/0b909902-449a-4d92-8479-5efd26a4edec/GXdP3T46rQ.json"></iframe>
             <p className="text-center text-gray-500 mt-5 text-2xl">Your cart is empty.</p>
           </div>
         ) : (
-          cartItems.map(item => (
+         orderState.orders.map(item => (
             <CartItem 
-              key={item.id} 
+              key={item._id} 
               item={item} 
-              onRemove={handleRemove} 
-              onQuantityChange={handleQuantityChange}
             />
           ))
         )}

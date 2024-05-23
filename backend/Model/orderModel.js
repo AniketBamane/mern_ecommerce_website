@@ -12,8 +12,7 @@ const orderModel = mongoose.Schema({
   },
   status:{
     type: String,
-    required: true,
-    default: 'pending'
+    default: 'unplaced'
   },
   amount:{
     type: Number,
@@ -21,8 +20,14 @@ const orderModel = mongoose.Schema({
   },
   products:[
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product'
+      product:  {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+      },
+      quantity:{
+        type: Number,
+        default: 0
+      }
     }
   ]
 })

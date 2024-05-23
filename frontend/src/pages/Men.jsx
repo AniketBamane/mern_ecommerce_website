@@ -2,13 +2,21 @@ import React, { useEffect, useState } from 'react'
 import Card from '../components/Card';
 import Layout from '../components/Layout';
 import ProductSection from '../components/ProductSection';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMenProducts } from '../store/slices/productSlice';
+import LoadingBar from '../components/LoadingBar';
 
 function Men() {
- const product =  useSelector(state=>state.product)
+  const dispatch = useDispatch()
+  const product =  useSelector(state=>state.product)
+  useEffect(()=>{
+    dispatch(fetchMenProducts())
+  },[dispatch])
  console.log(product.menProducts)
  if(product.isLoading){
-  return <h1>loading</h1>
+  return <center>
+    <LoadingBar />
+  </center>
  }
  if(product.menProducts.length == 0){
   return <center>
