@@ -5,7 +5,7 @@ const initalToken = JSON.parse(localStorage.getItem("token"))
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    token: initalToken || null,
+    token: initalToken,
     user: null,
   },
 

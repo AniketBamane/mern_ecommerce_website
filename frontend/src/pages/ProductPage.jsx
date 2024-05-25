@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProduct } from '../store/slices/productSlice';
 import LoadingBar from '../components/LoadingBar';
 import { fetchReviews } from '../store/slices/reviewSlice';
+import { addToCart } from '../store/slices/orderSlice';
 
 const ProductPage = () => {
   const {id} = useParams()
@@ -63,10 +64,17 @@ const ProductPage = () => {
     }
   };
 
-  const handleAddToCart = () => {
-    // Add the product to the cart
-    console.log('Added to cart:', { ...product, selectedQuantity: quantity });
-  };
+  const handleAddToCart = ({
+    id,quantity,price,image,name,
+  }) => {
+      dispatch(addToCart({
+        id,
+        quantity,
+        price: price*quantity,
+        name,
+        image,
+      }))
+    };
   if(productState.isLoading){
     return <center>
       <LoadingBar />
@@ -114,7 +122,13 @@ const ProductPage = () => {
             </div>
             <button 
               className="px-6 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600" 
-              onClick={handleAddToCart}
+              onClick={()=>handleAddToCart({
+                id: productState.product._id,
+                quantity: quantity,
+                name:productState.product.name,
+                image:productState.product.image,
+                price: Number(productState.product.price.replace("$",""))
+              })}
             >
               Add to Cart
             </button>

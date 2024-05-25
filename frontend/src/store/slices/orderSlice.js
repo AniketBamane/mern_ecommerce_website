@@ -42,10 +42,45 @@ export const deleteOrder = createAsyncThunk("deleteOrder", async ({ token, id })
   }
 });
 
+export const createOrder = createAsyncThunk("createOrder",async({token,cartArray,amount})=>{
+  const transformedArray = cartArray.map((item)=>(
+    {
+      product:item.product,
+      quantity:item.quantity
+    }
+  ))
+  try{
+    const res = await fetch(`http://localhost:3000/api/order/createOrder`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "authorization": `Bearer ${token}`
+      },
+      body:JSON.stringify({products:transformedArray,amount:amount,status:"placed"})
+    })
+    const data = await res.json()
+    if(res.ok){
+      toast.success("order created successfully !")
+      return data.order
+    }else{
+      toast.error(data.message)
+    }
+  }catch(err){
+    toast.error(err.message)
+  }
+})
+
+
+
+const initialState =  JSON.parse(localStorage.getItem(`cart`))
 
 const orderSlice = createSlice({
   name: "order",
   initialState: {
+    cart:initialState || {
+      cartItems:[],
+      totalPrice:0,
+    },
     orders: [],
     isLoading: false,
     isError: {
@@ -53,6 +88,47 @@ const orderSlice = createSlice({
       message: "",
     },
  },
+ reducers:{
+  addToCart:(state,action)=>{
+    state.cart.cartItems.push({
+      product:action.payload.id,
+      quantity:action.payload.quantity,
+      name:action.payload.name,
+      price:action.payload.price/action.payload.quantity,
+      image:action.payload.image
+    })
+    state.cart.totalPrice = state.cart.totalPrice + action.payload.price
+    localStorage.setItem(`cart`,JSON.stringify(state.cart))
+    toast.success("product is added to cart !")
+  },
+  removeFromCart:(state,action)=>{
+    state.cart.cartItems = state.cart.cartItems.filter((item)=>item.product !== action.payload.id)
+    state.cart.totalPrice = state.cart.totalPrice - action.payload.price
+    localStorage.setItem(`cart`,JSON.stringify(state.cart))
+    toast.success("product is removed from cart !")
+  },
+  clearCart:(state)=>{
+    state.cart.cartItems = []
+    state.cart.totalPrice = 0
+    localStorage.setItem(`cart`,JSON.stringify(state.cart))
+  },
+  updateCartItemQuantity:(state,action)=>{
+    state.cart.cartItems = state.cart.cartItems.map((item)=>{
+      if(item.product === action.payload.id){
+        item.quantity = action.payload.quantity
+      }
+      return item
+    })
+    if(action.payload.operation == "increasing"){
+      state.cart.totalPrice = state.cart.totalPrice + action.payload.price
+    }else if(action.payload.operation == "reducing"){
+      state.cart.totalPrice = state.cart.totalPrice - action.payload.price
+    }
+    localStorage.setItem(`cart${state.cart.userId}`,JSON.stringify(state.cart))
+    toast.success("product quantity is updated !")
+  }
+ },
+
  extraReducers: (builder)=>{
   builder.addCase(fetchOrders.pending,(state)=>{
     state.isLoading = true
@@ -78,7 +154,27 @@ const orderSlice = createSlice({
     state.isError.message = action.payload;
     state.isLoading = false;
   })
+  //create order
+  builder.addCase(createOrder.pending,(state)=>{
+    state.isLoading = true
+  })
+  builder.addCase(createOrder.fulfilled,(state,action)=>{
+    state.isLoading = false
+    state.orders.push({
+      products:action.payload.products,
+      status:action.payload.status,
+      amount:action.payload.amount,
+      _id:action.payload._id
+    })
+  })
+  builder.addCase(createOrder.rejected,(state,action)=>{
+    state.isLoading = false
+    state.isError.status = true
+    state.isError.message = action.payload.message
+  })
  }
 })
+
+export const {addToCart,removeFromCart,clearCart,updateCartItemQuantity} = orderSlice.actions;
 
 export default orderSlice.reducer;

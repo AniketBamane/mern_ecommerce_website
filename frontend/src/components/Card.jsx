@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Card = ({ image, name, rating ,productId }) => {
   const navigate = useNavigate()
-  console.log(productId)
   return (
     <div className="max-w-xs rounded overflow-hidden shadow-lg p-4 bg-white" onClick={(e)=>{
       navigate(`/product/${productId}`)

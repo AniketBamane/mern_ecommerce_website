@@ -5,7 +5,7 @@ const router =  express.Router()
 
 router.route("/allOrders").get(authMiddleware, controller.getAllOrders)
 
-router.route("/createOrder").get(authMiddleware, controller.createOrder)
+router.route("/createOrder").post(authMiddleware, controller.createOrder)
 
 router.route("/deleteOrder/:id").delete(authMiddleware, controller.deleteOrder)
 
