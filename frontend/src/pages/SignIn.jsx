@@ -3,75 +3,63 @@ import clothingImage from '../assets/signin-image.avif'; // Make sure to have an
 import Layout from '../components/Layout';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/slices/authSlice';
-import {useNavigate} from "react-router-dom"
-import {  toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom"
+import { toast } from 'react-toastify';
 
 const SignIn = () => {
- const dispatch = useDispatch()
- const navigate = useNavigate()
-  // Define state variables for each form field
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [gender, setGender] = useState('');
   const [phone, setPhone] = useState('');
 
-  // Handle form submission
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Logic to handle form submission goes here
-   try{
-   
-    const response = await fetch("http://localhost:3000/api/auth/signin",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        name:username,
-        email,
-        password,
-        gender,
-        phone
-      })
-    })
-   
-    const data = await response.json()
-
-    if(response.ok){
-      dispatch(login({
-        token:data.token,
-        user:data.createdUser,
-      }))
-  
-      setUsername('');
-      setEmail('');
-      setPassword('');
-      setGender('');
-      setPhone('');
-      navigate("/")
-      toast.success("Registration successful !!");
-    }else{
-      toast.error(data.message);
-    }
-  }catch(err){
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: username,
+          email,
+          password,
+          gender,
+          phone
+        })
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(login({
+          token: data.token,
+          user: data.createdUser,
+        }))
+        setUsername('');
+        setEmail('');
+        setPassword('');
+        setGender('');
+        setPhone('');
+        navigate("/")
+        toast.success("Registration successful !!");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err) {
       toast.error(err.message)
     }
-
-
-    // Reset form fields after submission (optional)
   };
 
   return (
     <Layout>
-      <div className="flex bg-white rounded-lg shadow-lg overflow-hidden w-[100%]">
-        {/* Left side with image */}
-        <div className="w-1/2">
+      <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="md:w-1/2">
           <img src={clothingImage} alt="Clothing" className="h-full w-full object-cover" />
         </div>
-        {/* Right side with form */}
-        <div className="w-1/2 p-8">
+        <div className="md:w-1/2 p-8">
           <h2 className="text-3xl font-bold mb-4">Sign In</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">

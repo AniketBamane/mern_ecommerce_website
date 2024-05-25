@@ -1,67 +1,58 @@
-// src/components/LoginForm.jsx
 import React, { useState } from 'react';
 import clothingImage from '../assets/login-image.webp'; // Make sure to have an image in your assets folder
 import Layout from '../components/Layout';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/slices/authSlice';
-import {useNavigate} from "react-router-dom"
-import {  toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom"
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
- 
 
-
-  const handleSubmit = async(e) => {
-    e.preventDefault();  
-    try{
-   
-      const response = await fetch("http://localhost:3000/api/auth/login",{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
         },
-        body:JSON.stringify({
+        body: JSON.stringify({
           email,
           password,
-       
         })
-      })
-     
-      const data = await response.json()
-  
-      if(response.ok){
+      });
+      const data = await response.json();
+      if (response.ok) {
         dispatch(
-        login({
-          token:data.token,
-          user:data.createdUser,
-        }))
-    
+          login({
+            token: data.token,
+            user: data.createdUser,
+          }))
         setEmail('');
         setPassword('');
         navigate("/");
         toast.success("Login successful !!");
-      }else{
+      } else {
         toast.error(data.message);
       }
-    }catch(err){
-        toast.error(err.message)
-      }
-  
+    } catch (err) {
+      toast.error(err.message)
+    }
   };
 
   return (
     <Layout>
-      <div className="flex bg-white rounded-lg shadow-lg overflow-hidden w-[100%]">
+      <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden">
         {/* Left side with image */}
-        <div className="w-1/2">
+        <div className="md:w-1/2">
           <img src={clothingImage} alt="Clothing" className="h-full w-full object-cover" />
         </div>
         {/* Right side with form */}
-        <div className="w-1/2 p-8">
+        <div className="md:w-1/2 p-8">
           <h2 className="text-3xl font-bold mb-4">Login</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -75,7 +66,6 @@ const Login = () => {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-               
               />
             </div>
             <div className="mb-6">
@@ -89,7 +79,6 @@ const Login = () => {
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-              
               />
             </div>
             <div className="flex items-center justify-between">
