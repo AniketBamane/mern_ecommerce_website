@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 export const fetchWishlist = createAsyncThunk("fetchWishlist",async(token)=>{
-  const res = await fetch("https://mern-ecommerce-website-jker.vercel.app/api/wishlist/getWishlist",{
+  const res = await fetch("https://mern-ecommerce-website-iota.vercel.app/api/wishlist/getWishlist",{
     method:"GET",
     headers:{
       "Content-Type":"application/json",
@@ -19,7 +19,7 @@ export const fetchWishlist = createAsyncThunk("fetchWishlist",async(token)=>{
 
 export const addProductToWishlist = createAsyncThunk("addProductToWishlist",async({token,wishlist})=>{
   try {
-    const res = await fetch("https://mern-ecommerce-website-jker.vercel.app/api/wishlist/addProducts",{
+    const res = await fetch("https://mern-ecommerce-website-iota.vercel.app/api/wishlist/addProducts",{
       method:"POST",
       headers:{
         "Content-Type":"application/json",
