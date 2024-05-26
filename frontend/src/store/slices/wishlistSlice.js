@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 export const fetchWishlist = createAsyncThunk("fetchWishlist",async(token)=>{
   const res = await fetch("http://localhost:3000/api/wishlist/getWishlist",{
@@ -13,6 +14,30 @@ export const fetchWishlist = createAsyncThunk("fetchWishlist",async(token)=>{
     return data.wishlist
   }else{
     return data.message
+  }
+})
+
+export const addProductToWishlist = createAsyncThunk("addProductToWishlist",async({token,wishlist})=>{
+  try {
+    const res = await fetch("http://localhost:3000/api/wishlist/addProducts",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "authorization": `Bearer ${token}`
+      },
+      body:JSON.stringify({
+        products:wishlist
+      })
+    })
+    const data = await res.json()
+    if(res.ok){
+      toast.success("product is added to wishlist successfully !")
+      return data.wishlist.wishlist
+    }else{
+      return data.message
+    }
+  }catch(err){
+    return err.message
   }
 })
 
@@ -35,6 +60,19 @@ const wishlistSlice = createSlice({
     state.wishlist = action.payload
   })
   builder.addCase(fetchWishlist.rejected,(state,action)=>{
+    state.isLoading = false
+    state.isError.status = true
+    state.isError.message = action.payload.message
+  })
+  //add a product in wishlist
+  builder.addCase(addProductToWishlist.pending,(state)=>{
+    state.isLoading = true
+  })
+  builder.addCase(addProductToWishlist.fulfilled,(state,action)=>{
+    state.isLoading = false
+    state.wishlist = action.payload
+  })
+  builder.addCase(addProductToWishlist.rejected,(state,action)=>{
     state.isLoading = false
     state.isError.status = true
     state.isError.message = action.payload.message

@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Card = ({ image, name, rating ,productId }) => {
+const Card = ({ image, name, rating ,productId , showAddToCart,showAddToWishlist }) => {
   const navigate = useNavigate()
   return (
     <div className="max-w-xs rounded overflow-hidden shadow-lg p-4 bg-white" onClick={(e)=>{
@@ -25,12 +25,12 @@ const Card = ({ image, name, rating ,productId }) => {
           ))}
         </div>
         <div className="flex justify-between flex-wrap gap-2 sm:justify-center">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          {showAddToCart &&<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Add to Cart
-          </button>
-          <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+          </button>}
+         {showAddToWishlist&& <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
             Wishlist
-          </button>
+          </button>}
         </div>
       </div>
     </div>

@@ -7,10 +7,13 @@ import { fetchProduct } from '../store/slices/productSlice';
 import LoadingBar from '../components/LoadingBar';
 import { fetchReviews } from '../store/slices/reviewSlice';
 import { addToCart } from '../store/slices/orderSlice';
+import { addProductToWishlist } from '../store/slices/wishlistSlice';
+import { toast } from 'react-toastify';
 
 const ProductPage = () => {
   const {id} = useParams()
   const dispatch = useDispatch()
+  const token = useSelector(state=>state.auth.token)
   const productState = useSelector(state=>state.product)
   const reviewState = useSelector(state=>state.review)
   const [quantity, setQuantity] = useState(1);
@@ -75,6 +78,16 @@ const ProductPage = () => {
         image,
       }))
     };
+
+  const handleAddToWishlist = ({
+    id
+  })=>{
+    if(token == null || undefined){
+      toast.error("please login or register to add product to wishlist !")
+    }
+    dispatch(addProductToWishlist({token,wishlist:[id]}))
+  }
+
   if(productState.isLoading){
     return <center>
       <LoadingBar />
@@ -132,6 +145,13 @@ const ProductPage = () => {
             >
               Add to Cart
             </button>
+            <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded m-2" onClick={()=>{
+              handleAddToWishlist({
+                id: productState.product._id,
+              })
+            }}>
+            Wishlist
+          </button>
           </div>
         </div>
         {/* Reviews Section */}

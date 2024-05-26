@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductSection from '../components/ProductSection';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWishlist } from '../store/slices/wishlistSlice';
@@ -8,6 +8,7 @@ function Wishlist() {
   const dispatch =  useDispatch()
  const token =  useSelector(state=>state.auth.token)
  const product = useSelector(state=>state.wishlist)
+ 
 
 useEffect(()=>{
   dispatch(fetchWishlist(token))
@@ -31,7 +32,7 @@ useEffect(()=>{
   </center>
  }else{
   return (
-    <ProductSection products={product.wishlist} />
+    <ProductSection products={product.wishlist} showAddToWishlist={false} />
     )
  }
 }

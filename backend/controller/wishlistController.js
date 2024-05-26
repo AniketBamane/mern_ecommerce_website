@@ -6,9 +6,9 @@ const addProduct = async(req, res, next) => {
     const user = req.user
     const updatedUser = await userModel.findOneAndUpdate({_id:user._id},{$push:{wishlist:products}})
     console.log(updatedUser)
+    const wishlist = await userModel.findOne({_id:user._id},{wishlist:1,_id:0}).populate("wishlist")
     if(updatedUser){
-    res.status(201).json({message: "product added to wishlist successfully"})
-
+    res.status(201).json({wishlist:wishlist,message: "product added to wishlist successfully"})
     }else{
       res.status(404).json({message: "product not added to wishlist successfully"})
     }
