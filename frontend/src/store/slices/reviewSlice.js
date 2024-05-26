@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchReviews = createAsyncThunk("fetchReviews",async(productId)=>{
-  const res = await fetch(`http://localhost:3000/api/review/getAllReviews/${productId}`,{
+  const res = await fetch(`https://mern-ecommerce-website-jker.vercel.app/api/review/getAllReviews/${productId}`,{
     method:"GET",
     headers:{
       "Content-Type":"application/json",
