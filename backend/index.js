@@ -34,6 +34,13 @@ app.use("/api/order",orderRouter)
 app.use("/api/contact",contactRouter)
 
 app.use(errorMiddleware)
+
+app.use((err, req, res, next) => {
+  console.log(err.message)
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 connection().then(()=>{
   app.listen(3000, () => {
     console.log('Server is running on port 3000');
