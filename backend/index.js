@@ -15,6 +15,10 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }
+
+app.use((req,res,next)=>{
+res.send("backend is setup !");
+})
 app.use(cors(corsOptions));
 app.use(express.json())
 app.use('/api/auth',authRouter)
