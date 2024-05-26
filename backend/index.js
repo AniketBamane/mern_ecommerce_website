@@ -10,8 +10,8 @@ const connection = require("./utils/db")
 const errorMiddleware = require("./middleware/errorMiddleware")
 const app = express();
 const corsOptions = {
-  origin: "https://mern-ecommerce-website-iota.vercel.app
-",
+  origin: ["https://mern-ecommerce-website-iota.vercel.app
+"],
   credentials: true,
   methods:"GET,POST,PUT,DELETE",
 }
