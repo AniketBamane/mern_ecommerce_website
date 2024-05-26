@@ -1,7 +1,7 @@
 import  { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchMenProducts = createAsyncThunk("fetchMenProducts",async()=>{
-  const res = await fetch("https://mern-ecommerce-website-jker.vercel.app/api/product/men",{
+  const res = await fetch("https://mern-ecommerce-website-iota.vercel.app/api/product/men",{
     method:"GET",
     headers:{
       "Content-Type":"application/json"
@@ -12,7 +12,7 @@ export const fetchMenProducts = createAsyncThunk("fetchMenProducts",async()=>{
 })
 
 export const fetchWomenProducts = createAsyncThunk("fetchWomenProducts",async()=>{
-  const res = await fetch("https://mern-ecommerce-website-jker.vercel.app/api/product/women",{
+  const res = await fetch("https://mern-ecommerce-website-iota.vercel.app/api/product/women",{
     method:"GET",
     headers:{
       "Content-Type":"application/json"
@@ -22,7 +22,7 @@ export const fetchWomenProducts = createAsyncThunk("fetchWomenProducts",async()=
   return data.products
 })
 export const fetchKidsProducts = createAsyncThunk("fetchKidsProducts",async()=>{
-  const res = await fetch("https://mern-ecommerce-website-jker.vercel.app/api/product/kids",{
+  const res = await fetch("https://mern-ecommerce-website-iota.vercel.app/api/product/kids",{
     method:"GET",
     headers:{
       "Content-Type":"application/json"
@@ -33,7 +33,7 @@ export const fetchKidsProducts = createAsyncThunk("fetchKidsProducts",async()=>{
 })
 
 export const fetchProduct = createAsyncThunk("fetchProduct",async(productId)=>{
-  const res = await fetch(`https://mern-ecommerce-website-jker.vercel.app/api/product/oneProduct/${productId}`,{
+  const res = await fetch(`https://mern-ecommerce-website-iota.vercel.app/api/product/oneProduct/${productId}`,{
     method:"GET",
     headers:{
       "Content-Type":"application/json",
@@ -44,7 +44,7 @@ export const fetchProduct = createAsyncThunk("fetchProduct",async(productId)=>{
 })
 
 export const fetchPopularProducts = createAsyncThunk("fetchPopularProducts",async()=>{
-  const res = await fetch("https://mern-ecommerce-website-jker.vercel.app/api/product/getPopularProducts",{
+  const res = await fetch("https://mern-ecommerce-website-iota.vercel.app/api/product/getPopularProducts",{
     method:"GET",
     headers:{
       "Content-Type":"application/json"
