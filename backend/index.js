@@ -10,15 +10,15 @@ const contactRouter = require("./Router/contactRouter")
 const connection = require("./utils/db")
 const errorMiddleware = require("./middleware/errorMiddleware")
 const app = express();
-const corsOptions = {
-  origin: ["https://mern-ecommerce-website-vk42.vercel.app"],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}
+// const corsOptions = {
+//   origin: ["https://mern-ecommerce-website-vk42.vercel.app"],
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Authorization']
+// }
 
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json())
 
 app.get('/', (req, res)=>{
