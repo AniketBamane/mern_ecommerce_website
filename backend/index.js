@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require("cors")
+const path = require("path")
 const authRouter = require('./Router/authRouter');
 const productRouter = require("./Router/productRouter")
 const wishlistRouter =  require("./Router/wishlistRouter")
@@ -16,14 +17,17 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization']
 }
 
-app.use((req,res,next)=>{
-res.send("backend is setup !");
-})
+
 app.use(cors(corsOptions));
 app.use(express.json())
+
+app.get('/', (req, res)=>{
+  app.use(express.static(path.resolve(__dirname,"frontend","dist")));
+  res.sendFile(path.resolve(__dirname,"frontend","dist","index.html"));
+})
+
 app.use('/api/auth',authRouter)
 app.use("/api/product",productRouter)
-
 app.use("/api/wishlist",wishlistRouter)
 app.use("/api/review",reviewRouter)
 app.use("/api/order",orderRouter)

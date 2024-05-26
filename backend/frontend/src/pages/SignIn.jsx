@@ -19,7 +19,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://mern-ecommerce-website-iota.vercel.app/api/auth/signin", {
+      const response = await fetch(`${window.location.origin}/api/auth/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

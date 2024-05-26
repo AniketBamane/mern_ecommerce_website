@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 export const fetchOrders = createAsyncThunk("fetchOrders",async({token,status})=>{
-  const res = await fetch(`https://mern-ecommerce-website-iota.vercel.app/api/order/allOrders?status=${status}`,{
+  const res = await fetch(`${window.location.origin}/api/order/allOrders?status=${status}`,{
     method:"GET",
     headers:{
       "Content-Type":"application/json",
@@ -20,7 +20,7 @@ export const fetchOrders = createAsyncThunk("fetchOrders",async({token,status})=
 })
 export const deleteOrder = createAsyncThunk("deleteOrder", async ({ token, id }) => {
   try {
-    const res = await fetch(`https://mern-ecommerce-website-iota.vercel.app/api/order/deleteOrder/${id}`, {
+    const res = await fetch(`${window.location.origin}/api/order/deleteOrder/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export const createOrder = createAsyncThunk("createOrder",async({token,cartArray
     }
   ))
   try{
-    const res = await fetch(`https://mern-ecommerce-website-iota.vercel.app/api/order/createOrder`,{
+    const res = await fetch(`${window.location.origin}/api/order/createOrder`,{
       method:"POST",
       headers:{
         "Content-Type":"application/json",
